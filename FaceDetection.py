@@ -7,6 +7,9 @@ smile_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_smile
 # To capture video from webcam
 cap = cv2.VideoCapture(0)
 
+# Counter for the smile frames
+smile_frame_counter = 0
+
 while True:
     # Read the frame
     _, img = cap.read()
@@ -26,6 +29,8 @@ while True:
 
         for (sx, sy, sw, sh) in smiles:
             cv2.rectangle(roi_color, (sx, sy), (sx+sw, sy+sh), (0, 0, 255), 2)
+            smile_frame_counter += 1
+            cv2.imwrite(f'smile_frame_{smile_frame_counter}.jpg', img)
 
     # Display
     cv2.imshow('img', img)
