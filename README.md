@@ -1,5 +1,5 @@
-# *** Project Name: Why So Cold? ***
-## *** Team members: Benjamin Zhang, Zhijie Kuang, Yzer De Gula ***
+# ***Project Name: Why So Cold?***
+## ***Team members: Benjamin Zhang, Zhijie Kuang, Yzer De Gula***
 
 ---
 
