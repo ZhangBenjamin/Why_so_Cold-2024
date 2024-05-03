@@ -34,6 +34,10 @@ while True:
         roi_color = img[y:y+h, x:x+w]
         smiles = smile_cascade.detectMultiScale(roi_gray, scaleFactor=1.9, minNeighbors=22)
 
+        # Draw a rectangle around each smile
+        for (sx, sy, sw, sh) in smiles:
+            cv2.rectangle(roi_color, (sx, sy), (sx+sw, sy+sh), (0, 0, 255), 2)
+
         # If a smile is detected and the timer is not running
         if len(smiles) > 0 and timer_start is None and time.time() - last_pic_time >= 1:
             timer_start = time.time()  # Start the timer
