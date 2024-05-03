@@ -15,7 +15,7 @@ smile_frame_counter = 0
 last_pic_time = time.time()
 
 # Timer for the countdown
-timer = 0
+timer_start = None
 
 while True:
     # Read the frame
@@ -36,17 +36,19 @@ while True:
 
         for (sx, sy, sw, sh) in smiles:
             cv2.rectangle(roi_color, (sx, sy), (sx+sw, sy+sh), (0, 0, 255), 2)
-            if time.time() - last_pic_time >= 1 and timer == 0:  # At least 1 second since last picture and timer is not running
-                timer = 3  # Start the timer
-            if timer > 0:
-                cv2.putText(img, str(timer), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2, cv2.LINE_AA)
-                timer -= 1
-                time.sleep(1)
-            elif timer == 0:
-                smile_frame_counter += 1
-                cv2.imwrite(f'smile_frame_{smile_frame_counter}.jpg', img)
-                print(f'Smile detected! Picture taken and saved as smile_frame_{smile_frame_counter}.jpg')
-                last_pic_time = time.time()
+            if time.time() - last_pic_time >= 1 and timer_start is None:  # At least 1 second since last picture and timer is not running
+                timer_start = time.time()  # Start the timer
+
+    # Check the timer
+    if timer_start is not None:
+        timer = int(3 - (time.time() - timer_start))
+        cv2.putText(img, str(timer), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2, cv2.LINE_AA)
+        if timer <= 0:
+            smile_frame_counter += 1
+            cv2.imwrite(f'smile_frame_{smile_frame_counter}.jpg', img)
+            print(f'Smile detected! Picture taken and saved as smile_frame_{smile_frame_counter}.jpg')
+            last_pic_time = time.time()
+            timer_start = None  # Reset the timer
 
     # Display
     cv2.imshow('img', img)
