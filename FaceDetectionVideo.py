@@ -49,7 +49,7 @@ while True:
     # Check the timer
     if timer_start is not None:
         timer = int(3 - (time.time() - timer_start))
-        cv2.putText(img, str(timer), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2, cv2.LINE_AA)
+        cv2.putText(img, str(timer), (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2, cv2.LINE_AA)
         if timer <= 0:
             # Only take a picture if a smile is still detected
             for (x, y, w, h) in faces:
